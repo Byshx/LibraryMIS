@@ -21,10 +21,17 @@ public class BookDAL {
 	}
 
 	public boolean Insert() {
-		String[] params = { book.getBkID(), book.getBkCode(), book.getBkName(), book.getBkAuthor(), book.getBkPress(),
-				book.getBkDatePress(), book.getBkISBN(), book.getBkCatalog(), book.getBkLanguage(), book.getBkPages(),
-				book.getBkPrice(), book.getBkDateIn(), book.getBkBrief(), book.getBkStatus() };
-		return connectDB.InsertTable("INSERT INTO Library.dbo.TB_Book VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,null,?)",
+		String[] params = null;
+		boolean succeed = true;
+		try {
+			params = new String[] { book.getBkID(), book.getBkCode(), book.getBkName(), book.getBkAuthor(),
+					book.getBkPress(), book.getBkDatePress(), book.getBkISBN(), book.getBkCatalog(),
+					book.getBkLanguage(), book.getBkPages(), book.getBkPrice(), book.getBkDateIn(), book.getBkBrief(),null,
+					book.getBkStatus() };
+		} catch (Exception e) {
+			succeed = false;
+		}
+		return succeed && connectDB.InsertTable("INSERT INTO Library.dbo.TB_Book VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
 				book.getBkCover(), 14, params);
 	}
 

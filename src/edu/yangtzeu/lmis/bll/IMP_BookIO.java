@@ -1,8 +1,10 @@
 package edu.yangtzeu.lmis.bll;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Optional;
@@ -29,6 +31,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import jxl.write.DateFormat;
 
 public class IMP_BookIO extends LibraryBLL {
 
@@ -539,10 +542,11 @@ public class IMP_BookIO extends LibraryBLL {
 		try {
 			while (resultSet.next()) {
 				Borrow borrow = new Borrow();
-				borrow.setValue(resultSet);
+				borrow.setValue(resultSet);				
 				data.add(borrow);
 			}
 			BorrowTable.setItems(data);
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

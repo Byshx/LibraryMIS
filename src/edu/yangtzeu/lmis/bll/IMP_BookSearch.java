@@ -274,7 +274,7 @@ public class IMP_BookSearch extends LibraryBLL {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String[] info = { book.getBkCode(), book.getBkID(), book.getBkName(), book.getBkAuthor(), book.getBkPress(),
+		String[] info = { book.getBkID(), book.getBkCode(), book.getBkName(), book.getBkAuthor(), book.getBkPress(),
 				book.getBkDatePress(), book.getBkISBN(), book.getBkCatalog(), book.getBkLanguageName(),
 				book.getBkPages(), book.getBkPrice(), book.getBkDateIn(), bookCount + "", book.getBkBrief(),
 				book.getBkStatus() };
@@ -307,7 +307,7 @@ public class IMP_BookSearch extends LibraryBLL {
 	public void Bottom_button_excel(MouseEvent event) {
 		GenerateExcel generateExcel = new GenerateExcel(Table, stage);
 		String[] params = { "ID", "索书号", "书名", "作者", "出版社", "出版日期", "ISBN", "分类号", "语种", "页数", "价格", "入馆日期", "状态" };
-		generateExcel.generate(params, new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }, "图书表");
+		generateExcel.generate(params, new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }, "图书表");
 	}
 
 	@FXML

@@ -24,12 +24,19 @@ public class BorrowDAL extends AbstactDAL {
 	public boolean Insert() {
 		// TODO Auto-generated method stub
 		// BorrowID 为标识列
-		String[] params = { borrow.getRdID(), borrow.getBkID(), borrow.getIdContinueTimes(), borrow.getIdDateOut(),
-				borrow.getIdDateRetPlan(), borrow.getIdDateRetAct(), borrow.getIdOverDay(), borrow.getIdOverMoney(),
-				borrow.getIdPunishMoney(), String.valueOf(borrow.getIsHasReturn()), borrow.getOperatorLend(),
-				borrow.getOperatorRet() };
-		return connectDB.InsertTable("INSERT INTO Library.dbo.TB_Borrow VALUES(?,?,?,?,?,?,?,?,?,?,?,?)", null, 0,
-				params);
+		String[] params = null;
+		boolean succeed = true;
+		try {
+			params = new String[] { borrow.getRdID(), borrow.getBkID(), borrow.getIdContinueTimes(),
+					borrow.getIdDateOut(), borrow.getIdDateRetPlan(), borrow.getIdDateRetAct(), borrow.getIdOverDay(),
+					borrow.getIdOverMoney(), borrow.getIdPunishMoney(), String.valueOf(borrow.getIsHasReturn()),
+					borrow.getOperatorLend(), borrow.getOperatorRet() };
+		} catch (Exception e) {
+			// TODO: handle exception
+			succeed = false;
+		}
+		return succeed && connectDB.InsertTable("INSERT INTO Library.dbo.TB_Borrow VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
+				null, -1, params);
 	}
 
 	@Override

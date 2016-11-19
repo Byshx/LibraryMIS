@@ -121,6 +121,10 @@ public class IMP_ReaderOp extends LibraryBLL {
 	 * 设置此输入流的目的是接受办理借阅卡时(而不是更新图片时)的图片
 	 */
 	private InputStream imageStream = null;
+	/**
+	 * 查看大图的保留实例
+	 */
+	private ImageView ScaleImage = null;
 
 	// 获得数据库连接单例
 	private ConnectDB connectDB = null;
@@ -152,6 +156,8 @@ public class IMP_ReaderOp extends LibraryBLL {
 		selection = new PopSelection();
 		message = new PopMessage();
 		connectDB = ConnectDB.getDBConnection();
+		Right_Button_ConfirmRegister.setDisable(true);
+		Right_Button_ConfirmChange.setDisable(true);
 
 		// 以下操作需要连接数据库
 		set_Choice_Role(Top_Choice_Role);
@@ -225,7 +231,7 @@ public class IMP_ReaderOp extends LibraryBLL {
 		IMP_PasswordChange passwordChange = new IMP_PasswordChange();
 		passwordChange.display(reader.getRdPwd());
 		// 如果是由按确定键关闭窗口，则去获取新密码
-		if (passwordChange.getCloseWay()) {			
+		if (passwordChange.getCloseWay()) {
 			ReaderDAL readerDAL = new ReaderDAL(connectDB);
 			reader.setRdPwd(passwordChange.getNewPassword());
 			readerDAL.setReader(reader);
@@ -380,8 +386,7 @@ public class IMP_ReaderOp extends LibraryBLL {
 	@FXML
 	public void Right_Buttom_Scale(MouseEvent event) {
 		if (!PhotoPane.getChildren().isEmpty()) {
-			// 未完成
-			ZoomImage zoomImage = new ZoomImage((ImageView) PhotoPane.getChildren().get(0));
+			ZoomImage zoomImage = new ZoomImage(ScaleImage);
 			zoomImage.display();
 		}
 	}
@@ -396,6 +401,7 @@ public class IMP_ReaderOp extends LibraryBLL {
 			InputStream inputStream = new FileInputStream(file);
 			Image photo = new Image(inputStream);
 			ImageView imageView = new ImageView(photo);
+			ScaleImage = new ImageView(new Image(new FileInputStream(file)));
 			imageView.setFitWidth(200);
 			imageView.setFitHeight(260);
 			PhotoPane.getChildren().add(imageView);
@@ -568,6 +574,7 @@ public class IMP_ReaderOp extends LibraryBLL {
 					return;
 				}
 				Image photo = new Image(inImage.getBinaryStream());
+				ScaleImage = new ImageView(new Image(inImage.getBinaryStream()));
 				ImageView imageView = new ImageView(photo);
 				imageView.setFitWidth(200);
 				imageView.setFitHeight(260);

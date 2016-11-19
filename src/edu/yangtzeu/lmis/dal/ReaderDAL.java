@@ -27,10 +27,16 @@ public class ReaderDAL extends AbstactDAL {
 
 	public boolean Insert() {
 		// TODO Auto-generated method stub
-		String[] params = { reader.getRdID(), reader.getRdName(), reader.getRdSex(), reader.getRdType(),
-				reader.getRdDept(), reader.getRdPhone(), reader.getRdEmail(), reader.getRdDateReg(),
+		String[] params = null;
+		boolean succeed = true;
+		try{
+		params = new String[]{ reader.getRdID(), reader.getRdName(), reader.getRdSex(), reader.getRdType(),
+				reader.getRdDept(), reader.getRdPhone(), reader.getRdEmail(), reader.getRdDateReg(),null,
 				reader.getRdStatus(), reader.getRdBorrowQty(), reader.getRdPwd(), reader.getRdAdminRoles() };
-		return cdb.InsertTable("INSERT Library.dbo.TB_Reader VALUES(?,?,?,?,?,?,?,?,null,?,?,?,?)", reader.getRdPhoto(),
+		}catch(Exception e){
+			succeed = false;
+		}
+		return succeed && cdb.InsertTable("INSERT Library.dbo.TB_Reader VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)", reader.getRdPhoto(),
 				9, params);
 	}
 

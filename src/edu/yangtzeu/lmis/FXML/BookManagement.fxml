@@ -84,7 +84,7 @@
             <Label text="图书价格：" GridPane.rowIndex="10" />
             <Label text="入馆日期：" GridPane.rowIndex="11" />
             <Label text="图书本数：" GridPane.rowIndex="12" />
-            <TextField fx:id="bkID" editable="false" prefHeight="30.0" prefWidth="160.0" GridPane.columnIndex="1" />
+            <TextField fx:id="bkID" prefHeight="30.0" prefWidth="160.0" GridPane.columnIndex="1" />
             <TextField fx:id="bkCode" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="bkName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="bkAuthor" GridPane.columnIndex="1" GridPane.rowIndex="3" />

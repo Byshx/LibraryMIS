@@ -26,10 +26,17 @@ public class ReaderTypeDAL extends AbstactDAL {
 	@Override
 	public boolean Insert() {
 		// TODO Auto-generated method stub
-		String[] params = { readerType.getRdType(), readerType.getRdTypeName(), readerType.getCanLendQty(),
-				readerType.getCanLendDay(), readerType.getCanContinueTimes(), readerType.getPunishRate(),
-				readerType.getDateVaild() };
-		return cdb.InsertTable("INSERT Library.dbo.TB_ReaderType VALUES(?,?,?,?,?,?,?)", null, 0, params);
+		String[] params = null;
+		boolean succeed = true;
+		try {
+			params = new String[] { readerType.getRdType(), readerType.getRdTypeName(), readerType.getCanLendQty(),
+					readerType.getCanLendDay(), readerType.getCanContinueTimes(), readerType.getPunishRate(),
+					readerType.getDateVaild() };
+		} catch (Exception e) {
+			// TODO: handle exception
+			succeed = false;
+		}
+		return succeed && cdb.InsertTable("INSERT Library.dbo.TB_ReaderType VALUES(?,?,?,?,?,?,?)", null, -1, params);
 	}
 
 	@Override

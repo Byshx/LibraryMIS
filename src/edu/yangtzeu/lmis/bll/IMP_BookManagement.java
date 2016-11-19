@@ -294,16 +294,17 @@ public class IMP_BookManagement extends LibraryBLL {
 			return;
 		BookDAL bookDAL = new BookDAL(connectDB);
 		Book book = Add_OR_Modify();
+		book.setBkID(bkID.getText());
 		bookDAL.setBook(book);
+		int tempID = Integer.parseInt(bkID.getText());
 		boolean succeed = true;
 		for (int i = 0; i < Integer.parseInt(bkSum.getText()); i++) {
-			book.setBkID(bkID.getText());
 			if (!bookDAL.Insert()) {
 				succeed = false;
 				break;
 			}
 			// 图书序号要加1
-			book.setBkID((Integer.parseInt(bkID.getText()) + 1) + "");
+			book.setBkID((++tempID) + "");
 		}
 		if (succeed) {
 			message.showMessage("消息", "入库成功");

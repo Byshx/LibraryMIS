@@ -227,6 +227,6 @@ public class Book extends AbstractModel implements ExcelNodeFormat {
 		list.add(getBkPrice());
 		list.add(getBkDateIn());
 		list.add(getBkStatus());
-		return null;
+		return list;
 	}
 }

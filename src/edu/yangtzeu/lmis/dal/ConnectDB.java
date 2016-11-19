@@ -92,7 +92,7 @@ public class ConnectDB implements Runnable {
 				preparedStatement = connection.prepareStatement(image_sql);
 				preparedStatement.setBinaryStream(1, image);
 				preparedStatement.executeUpdate();
-			}			
+			}
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -108,9 +108,8 @@ public class ConnectDB implements Runnable {
 			for (int i = 0; i < param.length; i++) {
 				preparedStatement.setString(i + 1, param[i]);
 			}
-			if (image != null) {
+			if (imageColumn != -1)
 				preparedStatement.setBinaryStream(imageColumn, image);
-			}
 			preparedStatement.executeUpdate();
 			return true;
 		} catch (SQLException e) {

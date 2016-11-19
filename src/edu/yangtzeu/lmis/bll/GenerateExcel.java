@@ -64,12 +64,12 @@ public class GenerateExcel {
 				ObservableList<?> list = tableView.getItems();
 				try {
 					for (int i = 0; i < list.size(); i++) {
-						List<String> getList;
+						List<String> getList = null;
 						// 泛型获取某实体的List<String>
 						getList = (List<String>) list.get(i).getClass().getMethod("bindNode").invoke(list.get(i),
 								new Object[0]);
 						for (int j = 0; j < printColumn.length; j++) {
-							sheet.addCell(new Label(printColumn[j], i + 1, getList.get(printColumn[j])));
+							sheet.addCell(new Label(j, i + 1, getList.get(printColumn[j])));
 						}
 					}
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
