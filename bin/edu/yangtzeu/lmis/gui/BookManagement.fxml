@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.yangtzeu.lmis.bll.IMP_BookManagement">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="读者管理">
+               <items>
+                  <MenuItem fx:id="ReaderManagement" mnemonicParsing="false" onAction="#ReaderManagement" text="读者管理" />
+                  <MenuItem fx:id="ReaderTypeOp" mnemonicParsing="false" onAction="#ReaderTypeOp" text="读者类别管理" />
+               </items></Menu>
+          <Menu mnemonicParsing="false" text="图书管理">
+            <items>
+              <MenuItem fx:id="NewbookIn" mnemonicParsing="false" onAction="#NewbookIn" text="新书入库" />
+                  <MenuItem fx:id="LibInfoManagement" mnemonicParsing="false" onAction="#LibInfoManagement" text="图书信息维护" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="借阅管理">
+            <items>
+                  <MenuItem fx:id="BorrowManagement" mnemonicParsing="false" onAction="#BorrowManagement" text="借阅管理" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="用户管理">
+              <items>
+                <MenuItem fx:id="PowerManagement" mnemonicParsing="false" onAction="#PowerManagement" text="权限管理" />
+                  <MenuItem fx:id="PasswordModify" mnemonicParsing="false" onAction="#PasswordModify" text="密码修改" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="Bottom_button_add" mnemonicParsing="false" onMouseReleased="#Bottom_button_add" text="添加" />
+            <Button fx:id="Bottom_button_modify" mnemonicParsing="false" onMouseReleased="#Bottom_button_modify" text="修改" />
+            <Button fx:id="Bottom_button_cancel" mnemonicParsing="false" onMouseReleased="#Bottom_button_cancel" text="取消" />
+            <Button fx:id="Bottom_button_return" mnemonicParsing="false" onMouseReleased="#Bottom_button_return" text="返回" />
+         </children>
+      </HBox>
+   </bottom>
+   <left>
+      <GridPane alignment="CENTER" maxHeight="-Infinity" prefHeight="646.0" prefWidth="345.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="108.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="221.0" minWidth="10.0" prefWidth="221.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.0" minWidth="10.0" prefWidth="10.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="图书起始序号：" />
+            <Label text="索书号：" GridPane.rowIndex="1" />
+            <Label text="图书名称：" GridPane.rowIndex="2" />
+            <Label text="图书作者：" GridPane.rowIndex="3" />
+            <Label contentDisplay="CENTER" text="出版社：" GridPane.rowIndex="4" />
+            <Label text="出版日期：" GridPane.rowIndex="5" />
+            <Label text="ISBN：" GridPane.rowIndex="6" />
+            <Label text="分类号：" GridPane.rowIndex="7" />
+            <Label text="语种：" GridPane.rowIndex="8" />
+            <Label text="图书页数：" GridPane.rowIndex="9" />
+            <Label text="图书价格：" GridPane.rowIndex="10" />
+            <Label text="入馆日期：" GridPane.rowIndex="11" />
+            <Label text="图书本数：" GridPane.rowIndex="12" />
+            <TextField fx:id="bkID" prefHeight="30.0" prefWidth="160.0" GridPane.columnIndex="1" />
+            <TextField fx:id="bkCode" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="bkName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="bkAuthor" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="bkPress" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="bkDatePress" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="bkISBN" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="bkCatalog" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="bkPages" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <TextField fx:id="bkPrice" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <TextField fx:id="bkDateln" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <TextField fx:id="bkSum" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+            <ChoiceBox fx:id="bkLanguage" prefHeight="30.0" prefWidth="228.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+				<items>
+					<FXCollections fx:factory="observableArrayList">
+						<String fx:value="中文" />
+						<String fx:value="中文繁体" />
+						<String fx:value="英文" />
+						<String fx:value="日语" />
+						<String fx:value="韩语" />
+						<String fx:value="德语" />
+						<String fx:value="法语" />
+						<String fx:value="俄语" />
+						<String fx:value="意大利语" />
+						<String fx:value="西班牙语" />
+						<String fx:value="阿拉伯语" />
+						<String fx:value="拉丁语" />
+						<String fx:value="葡萄牙语" />
+					</FXCollections>
+				</items>
+			</ChoiceBox>
+            <Label text="状态：" GridPane.rowIndex="13" />
+            <TextField fx:id="bkStatus" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+         </children>
+         <opaqueInsets>
+            <Insets left="50.0" />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets left="50.0" />
+         </BorderPane.margin>
+      </GridPane>
+   </left>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="内容简介：">
+               <VBox.margin>
+                  <Insets left="50.0" top="20.0" />
+               </VBox.margin>
+            </Label>
+            <TextArea fx:id="bkBrief" prefHeight="618.0" prefWidth="481.0" wrapText="true">
+               <VBox.margin>
+                  <Insets left="50.0" right="20.0" top="10.0" />
+               </VBox.margin>
+            </TextArea>
+         </children>
+      </VBox>
+   </center>
+   <right>
+      <VBox maxWidth="-Infinity" prefHeight="668.0" prefWidth="440.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="封面：">
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </Label>
+            <Pane fx:id="bkCover" prefHeight="600.0" prefWidth="400.0">
+               <VBox.margin>
+                  <Insets right="40.0" top="10.0" />
+               </VBox.margin>
+            </Pane>
+            <Button fx:id="add_bkCover" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseReleased="#add_bkCover" prefHeight="100.0" prefWidth="200.0" text="添加封面">
+               <VBox.margin>
+                  <Insets left="100.0" top="40.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </right>
+</BorderPane>

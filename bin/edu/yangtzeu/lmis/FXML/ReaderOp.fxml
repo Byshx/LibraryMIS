@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.yangtzeu.lmis.bll.IMP_ReaderOp">
+   <left>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="768.0" prefWidth="915.0" BorderPane.alignment="CENTER">
+         <bottom>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="Left_Button_RegisterCard" mnemonicParsing="false" onMouseReleased="#Left_Button_RegisterCard" text="办理借书证" />
+                  <Button fx:id="Left_Button_ChangeInfo" mnemonicParsing="false" onMouseReleased="#Left_Button_ChangeInfo" text="变更信息" />
+                  <Button fx:id="Left_Button_LossRegistration" mnemonicParsing="false" onMouseReleased="#Left_Button_LossRegistration" text="挂失" />
+                  <Button fx:id="Left_Button_TerminateLossRegistration" mnemonicParsing="false" onMouseReleased="#Left_Button_TerminateLossRegistration" text="解除挂失" />
+                  <Button fx:id="Left_Button_LogOut" mnemonicParsing="false" onMouseReleased="#Left_Button_LogOut" text="注销" />
+                  <Button fx:id="Left_Button_Exit" mnemonicParsing="false" onMouseReleased="#Left_Button_Exit" text="退出" />
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </HBox>
+         </bottom>
+         <top>
+            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="742.0" spacing="20.0" BorderPane.alignment="CENTER_RIGHT">
+               <children>
+                  <Label text="读者类别:" />
+                  <ChoiceBox fx:id="Top_Choice_Role" prefHeight="30.0" prefWidth="120.0" />
+                  <Label text="单位:" />
+                  <ChoiceBox fx:id="Top_Choice_Department" prefHeight="30.0" prefWidth="170.0" />
+                  <Label text="姓名:" />
+                  <TextField fx:id="Top_Choice_Name" prefHeight="30.0" prefWidth="140.0" />
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <TableView fx:id="Table" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="618.0" prefWidth="892.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="Table_ID" prefWidth="71.0" text="ID" />
+                <TableColumn fx:id="Table_Name" prefWidth="56.0" text="姓名" />
+                  <TableColumn fx:id="Table_Sex" prefWidth="36.0" text="性别" />
+                  <TableColumn fx:id="Table_Type" prefWidth="57.0" text="类型" />
+                  <TableColumn fx:id="Table_Department" prefWidth="151.0" text="院系" />
+                  <TableColumn fx:id="Table_Phone" prefWidth="106.0" text="电话" />
+                  <TableColumn fx:id="Table_Email" prefWidth="154.0" text="email" />
+                  <TableColumn fx:id="Table_Status" prefWidth="55.0" text="状态" />
+                  <TableColumn fx:id="Table_BorrowBooks" prefWidth="85.0" text="已借书" />
+                  <TableColumn fx:id="Table_TimeOfRegistor" prefWidth="120.0" text="注册日期" />
+              </columns>
+               <BorderPane.margin>
+                  <Insets bottom="20.0" left="20.0" />
+               </BorderPane.margin>
+            </TableView>
+         </center>
+      </BorderPane>
+   </left>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="读者管理">
+               <items>
+                  <MenuItem fx:id="ReaderManagement" mnemonicParsing="false" onAction="#ReaderManagement" text="读者管理" />
+                  <MenuItem fx:id="ReaderTypeOp" mnemonicParsing="false" onAction="#ReaderTypeOp" text="读者类别管理" />
+               </items></Menu>
+          <Menu mnemonicParsing="false" text="图书管理">
+            <items>
+              <MenuItem fx:id="NewbookIn" mnemonicParsing="false" onAction="#NewbookIn" text="新书入库" />
+                  <MenuItem fx:id="LibInfoManagement" mnemonicParsing="false" onAction="#LibInfoManagement" text="图书信息维护" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="借阅管理">
+            <items>
+                  <MenuItem fx:id="BorrowManagement" mnemonicParsing="false" onAction="#BorrowManagement" text="借阅管理" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="用户管理">
+              <items>
+                <MenuItem fx:id="PowerManagement" mnemonicParsing="false" onAction="#PowerManagement" text="权限管理" />
+                  <MenuItem fx:id="PasswordModify" mnemonicParsing="false" onAction="#PasswordModify" text="密码修改" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <right>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="768.0" prefWidth="485.0" BorderPane.alignment="CENTER">
+         <center>
+            <GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="430.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="73.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="155.0" minWidth="10.0" prefWidth="155.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="89.0" minWidth="0.0" prefWidth="21.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="57.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="88.0" minWidth="10.0" prefWidth="25.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="99.0" minWidth="10.0" prefWidth="95.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="88.0" minWidth="10.0" prefWidth="25.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="借书证号" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="姓名" GridPane.rowIndex="1" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="密码" GridPane.rowIndex="2" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="性别" GridPane.rowIndex="3" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="已借书" GridPane.rowIndex="4" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="证件状态" GridPane.rowIndex="5" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="读者角色" GridPane.rowIndex="6" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="读者类别" GridPane.rowIndex="7" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="单位" GridPane.rowIndex="8" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="电话号码" GridPane.rowIndex="9" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="电子邮件" GridPane.rowIndex="10" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="办证日期" GridPane.rowIndex="11" />
+                  <TextField fx:id="right_Text_CardID" prefHeight="30.0" prefWidth="82.0" GridPane.columnIndex="1" />
+                  <TextField fx:id="right_Text_Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="right_Text_Password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="right_Text_BorrowBooks" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="right_Text_Status" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="right_Text_Role" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <TextField fx:id="right_Text_Phone" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9" />
+                  <TextField fx:id="right_Text_Email" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="10" />
+                  <TextField fx:id="right_Text_TimeOfRegisterCard" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="11" />
+                  <ChoiceBox fx:id="right_Text_Sex" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+						<items>
+							<FXCollections fx:factory="observableArrayList">
+								<String fx:value="男" />
+								<String fx:value="女" />
+							</FXCollections>
+						</items>
+				  </ChoiceBox>
+                  <ChoiceBox fx:id="right_Text_Type" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <ChoiceBox fx:id="right_Text_Department" prefHeight="30.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8" />
+
+                  <Pane fx:id="PhotoPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="5" />
+                  <Button fx:id="Right_Button_ImageFile" contentDisplay="CENTER" mnemonicParsing="false" onMouseReleased="#Right_Button_ImageFile" prefHeight="30.0" prefWidth="166.0" text="图片文件" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="7" />
+                  <Button fx:id="Right_Buttom_Scale" mnemonicParsing="false" onMouseReleased="#Right_Buttom_Scale" prefHeight="30.0" prefWidth="173.0" text="查看大图" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="6" />
+               </children>
+            </GridPane>
+         </center>
+         <bottom>
+            <HBox alignment="TOP_CENTER" prefHeight="99.0" prefWidth="458.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="Right_Button_ConfirmRegister" mnemonicParsing="false" onMouseReleased="#Right_Button_ConfirmRegister" text="确认办证" />
+                  <Button fx:id="Right_Button_ConfirmChange" mnemonicParsing="false" onMouseReleased="#Right_Button_ConfirmChange" text="确认变更" />
+                  <Button fx:id="Right_Button_Cancel" mnemonicParsing="false" onMouseReleased="#Right_Button_Cancel" text="取消" />
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="458.0" spacing="25.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="Top_Button_Search" minWidth="-Infinity" mnemonicParsing="false" onMouseReleased="#Top_Button_Search" prefWidth="100.0" text="查找" />
+                  <Button fx:id="Top_Button_Excel" minWidth="-Infinity" mnemonicParsing="false" onMouseReleased="#Top_Button_Excel" prefWidth="100.0" text="Excel" />
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+         </top>
+      </BorderPane>
+   </right>
+</BorderPane>
