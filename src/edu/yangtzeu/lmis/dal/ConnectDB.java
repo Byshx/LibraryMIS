@@ -127,6 +127,7 @@ public class ConnectDB implements Runnable {
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
 			System.out.println("É¾³ýÊý¾Ý¿âÊ§°Ü");
 			return false;
 		}

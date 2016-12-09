@@ -325,6 +325,11 @@ public class IMP_ReaderOp extends LibraryBLL {
 		Optional<ButtonType> result = selection.showAndWait();
 		if (result.get() == ButtonType.NO)
 			return;
+		if (Integer.parseInt(getReaderData.getRdBorrowQty()) > 0) {
+			message.showMessage("消息", "用户有未归还书籍，不能注销");
+			message.showAndWait();
+			return;
+		}
 		getReaderData.setRdStatus("注销");
 		ReaderDAL readerDAL = new ReaderDAL(connectDB);
 		readerDAL.setReader(getReaderData);

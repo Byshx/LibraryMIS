@@ -451,33 +451,56 @@ public class IMP_BookIO extends LibraryBLL {
 		Borrow borrow = BorrowTable.getSelectionModel().getSelectedItem();
 		if (borrow == null)
 			return;
-		selection.showMessage("消息", "确认还书？");
-		Optional<ButtonType> optional = selection.showAndWait();
-		if (optional.get() == ButtonType.NO)
+		// 获取图书价格
+		connectDB.GetTable("SELECT bkPrice FROM Library.dbo.TB_Book WHERE bkID = '" + borrow.getBkID() + "'");
+		ResultSet resultSet = connectDB.getResult();
+		String bookPrice = null;
+		try {
+			if (resultSet.next()) {
+				bookPrice = resultSet.getString("bkPrice");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// 创建还书操作窗口
+		BackBook backBook = new BackBook(borrow.getIdOverMoney(), bookPrice);
+		backBook.display();
+		if (!backBook.getCloseWay())
 			return;
-		// 将状态设为已还
-		borrow.setIsHasReturn(true);
-		// 设置还书操作员名称
-		borrow.setOperatorRet(reader.getRdName());
-		BorrowDAL borrowDAL = new BorrowDAL(connectDB);
-		borrowDAL.setBorrow(borrow);
+		else {
+			// 设置还书操作员名称
+			borrow.setOperatorRet(reader.getRdName());
+			// 确认更新
+			boolean updateBookStatus = false;
+			// 将状态设为已还
+				borrow.setIsHasReturn(true);
+			if (backBook.isLost()) {
+				borrow.setIdPunishMoney(backBook.getPunish());
+				updateBookStatus = connectDB.UpdateTable(
+						"Update Library.dbo.TB_Book SET bkStatus = ? WHERE bkID = '" + borrow.getBkID() + "'", null,
+						null, new String[] { "遗失" });
+			} else {			
+				updateBookStatus = connectDB.UpdateTable(
+						"UPDATE Library.dbo.TB_Book SET bkStatus = ? WHERE bkID = '" + borrow.getBkID() + "'", null,
+						null, new String[] { "在馆" });
+			}
+			BorrowDAL borrowDAL = new BorrowDAL(connectDB);
+			borrowDAL.setBorrow(borrow);
 
-		reader.setRdBorrowQty((Integer.parseInt(reader.getRdBorrowQty()) - 1) + "");
-		ReaderDAL readerDAL = new ReaderDAL(connectDB);
-		readerDAL.setReader(reader);
+			reader.setRdBorrowQty((Integer.parseInt(reader.getRdBorrowQty()) - 1) + "");
+			ReaderDAL readerDAL = new ReaderDAL(connectDB);
+			readerDAL.setReader(reader);
 
-		boolean succeed = connectDB.UpdateTable(
-				"UPDATE Library.dbo.TB_Book SET bkStatus = ? WHERE bkID = '" + borrow.getBkID() + "'", null, null,
-				new String[] { "在馆" });
-
-		if (borrowDAL.Update() && readerDAL.Update() && succeed) {
-			message.showMessage("消息", "还书成功");
-			SearchRdInfo();
-			message.showAndWait();
-			// 刷新BookTable
-		} else {
-			message.showMessage("消息", "还书失败");
-			message.showAndWait();
+			if (borrowDAL.Update() && readerDAL.Update() && updateBookStatus) {
+				message.showMessage("消息", "还书成功");
+				SearchRdInfo();
+				message.showAndWait();
+				// 刷新BookTable
+			} else {
+				message.showMessage("消息", "还书失败");
+				message.showAndWait();
+			}
 		}
 	}
 
