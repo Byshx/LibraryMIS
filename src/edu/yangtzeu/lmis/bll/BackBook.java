@@ -23,11 +23,13 @@ public class BackBook {
 
 	private boolean BOOK_ISLOST = false;
 
-	private final static int FEE = 5; // 加工费
-
 	private String Overday = null;
 
 	private String BookPrice = null;
+
+	private String Punish_Act = null; // 实际罚金
+
+	private PopMessage message = new PopMessage();
 
 	public BackBook(String Overday, String BookPrice) {
 		// TODO Auto-generated constructor stub
@@ -53,11 +55,17 @@ public class BackBook {
 		t1.setText(Overday == null ? "0" : Overday);
 		t1.setEditable(false);
 
-		Label label2 = new Label("总罚款:");
-		label2.setPadding(new Insets(0, 50, 0, 0));
+		Label label2 = new Label("丢失罚款:");
+		label2.setPadding(new Insets(0, 35, 0, 0));
 		TextField t2 = new TextField();
 		t2.setText("0");
 		t2.setEditable(false);
+
+		Label label3 = new Label("实际罚款:");
+		label3.setPadding(new Insets(0, 35, 0, 0));
+		TextField t3 = new TextField();
+		t3.setText(t1.getText());
+		t3.setEditable(false);
 
 		HBox one = new HBox();
 		one.setPadding(new Insets(20, 20, 20, 20));
@@ -66,6 +74,10 @@ public class BackBook {
 		HBox two = new HBox();
 		two.setPadding(new Insets(20, 20, 20, 20));
 		two.getChildren().addAll(label2, t2);
+
+		HBox three = new HBox();
+		three.setPadding(new Insets(20, 20, 20, 20));
+		three.getChildren().addAll(label3, t3);
 
 		ToggleGroup toggleGroup = new ToggleGroup();
 
@@ -81,26 +93,48 @@ public class BackBook {
 				.addListener((ObservableValue<? extends Toggle> ov, Toggle old_Toggle, Toggle new_Toggle) -> {
 					if (r2.isSelected()) {
 						BOOK_ISLOST = true;
-						t2.setText(getPunish());
+						t3.setText("请输入实际罚金");
+						t3.setEditable(true);
+						t2.setText(Float.parseFloat(BookPrice) * 3 + "");
+						t1.setText("0");
 					} else {
+						t1.setText(Overday == null ? "0" : Overday);
 						t2.setText("0");
+						t3.setText(t1.getText());
+						t3.setEditable(false);
 						BOOK_ISLOST = false;
 					}
 				});
+		HBox four = new HBox();
+		four.setAlignment(Pos.CENTER);
+		four.setPadding(new Insets(20, 20, 20, 20));
+		four.setSpacing(10);
+		four.getChildren().addAll(r1, r2);
 
-		HBox three = new HBox();
-		three.setAlignment(Pos.CENTER);
-		three.setPadding(new Insets(20, 20, 20, 20));
-		three.setSpacing(10);
-		three.getChildren().addAll(r1, r2);
-
-		Label tip = new Label("*注：丢失罚款 = 书籍原价 + 加工费(5元)");
+		Label tip = new Label("*注：丢失罚款  <= 书籍原价 x 3");
 
 		// 按钮
 		Button ok = new Button("确定还书");
-		
+
 		ok.setOnAction(e -> {
-			// 非正常流程中断窗口
+			// 检测输入合法性
+			Punish_Act = t3.getText();
+			if (BOOK_ISLOST) {
+				float tmpNumber = 0f;
+				try {
+					tmpNumber = Float.parseFloat(Punish_Act);
+				} catch (Exception e2) {
+					// TODO: handle exception
+					message.showMessage("提示", "输入错误");
+					message.showAndWait();
+					return;
+				}
+				if (tmpNumber < Float.parseFloat(BookPrice) || tmpNumber > 3 * Float.parseFloat(BookPrice)) {
+					message.showMessage("提示", "输入罚金应在'书籍单价和三倍于书籍单价'之间！");
+					message.showAndWait();
+					return;
+				}
+			}
 			window.close();
 		});
 
@@ -119,7 +153,7 @@ public class BackBook {
 
 		VBox layout = new VBox();
 		layout.setPadding(new Insets(20, 20, 20, 20));
-		layout.getChildren().addAll(one, two, three, tip, button);
+		layout.getChildren().addAll(one, two, three, four, tip, button);
 		layout.setAlignment(Pos.CENTER);
 		// 设置背景色
 		layout.setStyle("-fx-background: #000000;");
@@ -137,7 +171,7 @@ public class BackBook {
 	 */
 	public String getPunish() {
 		if (BOOK_ISLOST) {
-			return Float.parseFloat(BookPrice) + FEE + "";
+			return Punish_Act;
 		}
 		return "0";
 	}

@@ -32,7 +32,6 @@ public class ConnectDB implements Runnable {
 	public static ConnectDB initInstance() {
 		singleton = new ConnectDB();
 		new Thread(singleton).start();
-		;
 		return singleton;
 	}
 

@@ -384,16 +384,6 @@ public class IMP_BookIO extends LibraryBLL {
 		Borrow borrow = BorrowTable.getSelectionModel().getSelectedItem();
 		if (borrow == null)
 			return;
-		try {
-			if (Integer.parseInt(borrow.getIdContinueTimes()) + 1 > Integer.parseInt(CanLendDay.getText())) {
-				message.showMessage("消息", "已达到可续借次数");
-				message.showAndWait();
-				return;
-			}
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		selection.showMessage("消息", "确认续借？");
 		Optional<ButtonType> optional = selection.showAndWait();
 		if (optional.get() == ButtonType.NO)
