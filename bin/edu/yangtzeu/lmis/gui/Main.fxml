@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.yangtzeu.lmis.bll.IMP_Login">
+   <center>
+      <GridPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="200.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="133.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.0" minWidth="10.0" prefWidth="124.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="223.0" minWidth="10.0" prefWidth="210.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="66.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="67.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="146.0" minHeight="0.0" prefHeight="24.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="32.0" minHeight="8.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="Button_Exit" focusTraversable="false" mnemonicParsing="false" onMouseReleased="#Button_Exit" prefHeight="42.0" prefWidth="120.0" text="退出" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Button>
+            <Button fx:id="Button_Login" focusTraversable="false" mnemonicParsing="false" onMouseReleased="#Button_Login" prefHeight="42.0" prefWidth="120.0" text="登陆" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Button>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="114.0" text="  密码：" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="114.0" text="用户名：" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <TextField fx:id="Admin" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <PasswordField fx:id="Password" onKeyPressed="#TypedEnter" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+   </center>
+   <bottom>
+      <ProgressBar minHeight="-Infinity" prefHeight="5.0" prefWidth="600.0" progress="0.58" BorderPane.alignment="CENTER" />
+   </bottom>
+   <top>
+      <Pane prefHeight="200.0" prefWidth="600.0" style="-fx-background-image: url('edu/yangtzeu/lmis/gui/book.png'); -fx-background-size: 600 200;" BorderPane.alignment="CENTER" />
+   </top>
+</BorderPane>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.yangtzeu.lmis.bll.IMP_BookIO">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="读者管理">
+               <items>
+                  <MenuItem fx:id="ReaderManagement" mnemonicParsing="false" onAction="#ReaderManagement" text="读者管理" />
+                  <MenuItem fx:id="ReaderTypeOp" mnemonicParsing="false" onAction="#ReaderTypeOp" text="读者类别管理" />
+               </items></Menu>
+          <Menu mnemonicParsing="false" text="图书管理">
+            <items>
+              <MenuItem fx:id="NewbookIn" mnemonicParsing="false" onAction="#NewbookIn" text="新书入库" />
+                  <MenuItem fx:id="LibInfoManagement" mnemonicParsing="false" onAction="#LibInfoManagement" text="图书信息维护" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="借阅管理">
+            <items>
+                  <MenuItem fx:id="BorrowManagement" mnemonicParsing="false" onAction="#BorrowManagement" text="借阅管理" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="用户管理">
+              <items>
+                <MenuItem fx:id="PowerManagement" mnemonicParsing="false" onAction="#PowerManagement" text="权限管理" />
+                  <MenuItem fx:id="PasswordModify" mnemonicParsing="false" onAction="#PasswordModify" text="密码修改" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="Bottom_button_lend" mnemonicParsing="false" onMouseReleased="#Bottom_button_lend" text="借阅" />
+            <Button fx:id="Bottom_button_relend" mnemonicParsing="false" onMouseReleased="#Bottom_button_relend" text="续借" />
+            <Button fx:id="Bottom_button_gbBook" mnemonicParsing="false" onMouseReleased="#Bottom_button_gbBook" text="还书" />
+            <Button fx:id="Bottom_button_return" mnemonicParsing="false" onMouseReleased="#Bottom_button_return" text="返回" />
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="1320.0" spacing="10.0">
+               <children>
+                  <Label text="读者编号：" />
+                  <TextField fx:id="rdID" prefHeight="30.0" prefWidth="154.0" />
+                  <Button fx:id="rdSearch" mnemonicParsing="false" onMouseReleased="#rdSearch" text="查询" />
+                  <GridPane alignment="CENTER" prefHeight="126.0" prefWidth="1021.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.0" minWidth="10.0" prefWidth="103.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="468.0" minWidth="10.0" prefWidth="223.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="520.0" minWidth="10.0" prefWidth="105.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="634.0" minWidth="10.0" prefWidth="219.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="565.0" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="607.0" minWidth="10.0" prefWidth="236.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TextField fx:id="rdType" editable="false" prefHeight="30.0" prefWidth="220.0" GridPane.columnIndex="5" />
+                        <TextField fx:id="rdBorrowQty" editable="false" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                        <Label text="可借书数量：" GridPane.rowIndex="1" />
+                        <Label text="读者姓名：" />
+                        <TextField fx:id="CanLendQty" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="rdName" editable="false" maxWidth="-Infinity" prefWidth="220.0" GridPane.columnIndex="1" />
+                        <Label text="读者单位：" GridPane.columnIndex="2">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="rdDept" editable="false" maxWidth="-Infinity" prefHeight="30.0" prefWidth="220.0" GridPane.columnIndex="3" />
+                        <Label text="读者类型：" GridPane.columnIndex="4">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="可借书天数：" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="CanLendDay" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label text="已借数量：" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="40.0" />
+                     </padding>
+                  </GridPane>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+            </HBox>
+            <Label text="已借图书：">
+               <VBox.margin>
+                  <Insets left="40.0" />
+               </VBox.margin>
+            </Label>
+            <TableView fx:id="BorrowTable" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="Borrow_bkID" prefWidth="114.0" text="图书序号" />
+                <TableColumn fx:id="Borrow_bkName" prefWidth="365.0" text="图书名称" />
+                  <TableColumn fx:id="Borrow_bkAuthor" prefWidth="99.0" text="图书作者" />
+                  <TableColumn fx:id="Borrow_CanContinueTimes" prefWidth="93.0" text="续借次数" />
+                  <TableColumn fx:id="Borrow_IdDateOut" prefWidth="177.0" text="借阅日期" />
+                  <TableColumn fx:id="Borrow_IdDateRetPlan" prefWidth="193.0" text="应还日期" />
+                  <TableColumn fx:id="Borrow_IdOverDay" prefWidth="106.0" text="超期天数" />
+                  <TableColumn fx:id="Borrow_IdOverMoney" prefWidth="172.0" text="超期金额/元" />
+              </columns>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" />
+               </VBox.margin>
+            </TableView>
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="1400.0" spacing="20.0">
+               <children>
+                  <Label text="图书序号：" />
+                  <TextField fx:id="s_bkID" />
+                  <Button fx:id="bkID_Search" mnemonicParsing="false" onMouseReleased="#bkID_Search" text="查找" />
+                  <Label text="图书名称：" />
+                  <TextField fx:id="s_bkName" />
+                  <Button fx:id="bkName_Search" mnemonicParsing="false" onMouseReleased="#bkName_Search" text="查找" />
+               </children>
+            </HBox>
+            <Label text="查询结果：">
+               <VBox.margin>
+                  <Insets left="40.0" />
+               </VBox.margin>
+            </Label>
+            <TableView fx:id="BookTable" prefHeight="289.0" prefWidth="1320.0">
+              <columns>
+                <TableColumn fx:id="r_bkID" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="r_bkCode" prefWidth="100.0" text="索书号" />
+                  <TableColumn fx:id="r_bkName" minWidth="2.0" prefWidth="188.0" text="书名" />
+                  <TableColumn fx:id="r_bkAuthor" prefWidth="69.0" text="作者" />
+                  <TableColumn fx:id="r_bkPress" prefWidth="102.0" text="出版社" />
+                  <TableColumn fx:id="r_bkDatePress" prefWidth="108.0" text="出版日期" />
+                  <TableColumn fx:id="r_bkISBN" prefWidth="112.0" text="ISBN" />
+                  <TableColumn fx:id="r_bkCatalog_No" prefWidth="117.0" text="分类号" />
+                  <TableColumn fx:id="r_bkLanguage" prefWidth="70.0" text="语种" />
+                  <TableColumn fx:id="r_bkPages" prefWidth="66.0" text="页数" />
+                  <TableColumn fx:id="r_bkPrice" prefWidth="99.0" text="价格" />
+                  <TableColumn fx:id="r_bkDateIn" prefWidth="126.0" text="入馆日期" />
+                  <TableColumn fx:id="r_bkStatus" prefWidth="87.0" text="状态" />
+              </columns>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" />
+               </VBox.margin>
+            </TableView>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
