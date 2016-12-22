@@ -1,10 +1,8 @@
 package edu.yangtzeu.lmis.bll;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Optional;
@@ -31,7 +29,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import jxl.write.DateFormat;
 
 public class IMP_BookIO extends LibraryBLL {
 
@@ -458,7 +455,10 @@ public class IMP_BookIO extends LibraryBLL {
 		Optional<ButtonType> optional = selection.showAndWait();
 		if (optional.get() == ButtonType.NO)
 			return;
+		// 将状态设为已还
 		borrow.setIsHasReturn(true);
+		// 设置还书操作员名称
+		borrow.setOperatorRet(reader.getRdName());
 		BorrowDAL borrowDAL = new BorrowDAL(connectDB);
 		borrowDAL.setBorrow(borrow);
 
@@ -503,6 +503,9 @@ public class IMP_BookIO extends LibraryBLL {
 		}
 		if (rdID.getText().equals(""))
 			return;
+		// 向数据库传递更新请求，触动触发器，更新罚款
+		connectDB.UpdateTable("UPDATE Library.dbo.TB_Borrow SET rdID = '" + rdID.getText() + "' WHERE rdID = '"
+				+ rdID.getText() + "'", null, null, new String[] {});
 		// 连接三个表:读者表 读者类别表 和 借阅表
 		connectDB.GetTable("SELECT * FROM Library.dbo.TB_Reader WHERE rdID = '" + rdID.getText() + "'");
 		ResultSet resultSet = connectDB.getResult();
@@ -520,7 +523,6 @@ public class IMP_BookIO extends LibraryBLL {
 				CanLendQty.setText(resultSet2.getString("CanLendQty"));
 				CanLendDay.setText(resultSet2.getString("CanLendDay"));
 				rdBorrowQty.setText(resultSet.getString("rdBorrowQty"));
-				// 将rdID暂时存储在TempRdID中，防止输入框后再操作导致错误
 				RenewBorrowTable();
 			} else {
 				message.showMessage("消息", "未找到");
@@ -542,7 +544,7 @@ public class IMP_BookIO extends LibraryBLL {
 		try {
 			while (resultSet.next()) {
 				Borrow borrow = new Borrow();
-				borrow.setValue(resultSet);				
+				borrow.setValue(resultSet);
 				data.add(borrow);
 			}
 			BorrowTable.setItems(data);
