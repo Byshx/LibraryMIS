@@ -80,7 +80,7 @@ public class IMP_BookManagement extends LibraryBLL {
 	@FXML
 	private TextField bkSum;
 	@FXML
-	private TextField bkStatus;
+	private ChoiceBox<String> bkStatus;
 
 	// 中部书籍简介
 
@@ -146,7 +146,7 @@ public class IMP_BookManagement extends LibraryBLL {
 		connectDB = ConnectDB.getDBConnection();
 		if (ops == 0) {
 			Bottom_button_modify.setDisable(true);
-			bkStatus.setText("在馆");
+			bkStatus.getSelectionModel().select("在馆");
 			bkStatus.setDisable(true);
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			bkDateln.setText(simpleDateFormat.format(new Date()));
@@ -189,7 +189,7 @@ public class IMP_BookManagement extends LibraryBLL {
 		bkDateln.setText(info[11]);
 		bkSum.setText(info[12]);
 		bkBrief.setText(info[13]);
-		bkStatus.setText(info[14]);
+		bkStatus.getSelectionModel().select(info[14]);
 		connectDB.GetTable("SELECT bkCover FROM Library.dbo.TB_Book WHERE bkID = '" + bkID.getText() + "'");
 		ResultSet image = connectDB.getResult();
 		try {
@@ -390,7 +390,7 @@ public class IMP_BookManagement extends LibraryBLL {
 		bkPrice.clear();
 		bkDateln.clear();
 		bkSum.clear();
-		bkStatus.clear();
+		bkStatus.getSelectionModel().clearSelection();
 		bkBrief.clear();
 		bkCover.getChildren().clear();
 		image = null;
@@ -419,7 +419,7 @@ public class IMP_BookManagement extends LibraryBLL {
 		book.setBkDateIn(bkDateln.getText());
 		book.setBkBrief(bkBrief.getText());
 		book.setBkCover(image);
-		book.setBkStatus(bkStatus.getText());
+		book.setBkStatus(bkStatus.getSelectionModel().getSelectedItem());
 		return book;
 	}
 }

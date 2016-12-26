@@ -116,7 +116,17 @@
 				</items>
 			</ChoiceBox>
             <Label text="状态：" GridPane.rowIndex="13" />
-            <TextField fx:id="bkStatus" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+            <ChoiceBox fx:id="bkStatus" prefHeight="30.0" prefWidth="228.0" GridPane.columnIndex="1" GridPane.rowIndex="13" >
+				<items>
+					<FXCollections fx:factory="observableArrayList">
+						<String fx:value="在馆" />
+						<String fx:value="借出" />
+						<String fx:value="遗失" />
+						<String fx:value="变卖" />
+						<String fx:value="销毁" />
+					</FXCollections>
+				</items>
+			</ChoiceBox>
          </children>
          <opaqueInsets>
             <Insets left="50.0" />

@@ -113,6 +113,12 @@ public class IMP_UserPowerManagement extends LibraryBLL {
 	// 获得返回栈
 	private ReturnStack back = ReturnStack.getReturnInstance();
 
+	/**
+	 * 用于临时保存用户输入的查找字段</br>
+	 * 
+	 */
+	private String tempSQL = "";
+
 	// 用于临时存储选中的Reader实例
 	private Reader tempReader = null;
 
@@ -202,7 +208,7 @@ public class IMP_UserPowerManagement extends LibraryBLL {
 		IMP_PasswordChange passwordChange = new IMP_PasswordChange();
 		passwordChange.display(reader.getRdPwd());
 		// 如果是由按确定键关闭窗口，则去获取新密码
-		if (passwordChange.getCloseWay()) {		
+		if (passwordChange.getCloseWay()) {
 			ReaderDAL readerDAL = new ReaderDAL(connectDB);
 			readerDAL.setReader(reader);
 			if (readerDAL.Update()) {
@@ -229,20 +235,12 @@ public class IMP_UserPowerManagement extends LibraryBLL {
 				}
 			}
 		}
-		if (!Top_Choice_Department.getSelectionModel().isEmpty()) {
-			connectDB.GetTable("SELECT rdType FROM Library.dbo.TB_ReaderType WHERE rdTypeName = '"
-					+ Top_Choice_Department.getSelectionModel().getSelectedItem() + "'");
-			ResultSet resultSet = connectDB.getResult();
-			try {
-				if (resultSet.next()) {
-					sql = sql + "rdType = '" + resultSet.getString(1) + "' AND ";
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		if (Top_Choice_Department.getSelectionModel().getSelectedItem() != null) {
+			sql = sql + "rdDept ='" + Top_Choice_Department.getSelectionModel().getSelectedItem() + "' AND ";
 		}
 		sql = sql + "rdName LIKE '%" + Top_Choice_Name.getText() + "%'";
+		System.out.println(sql);
+		tempSQL = sql;
 		connectDB.GetTable(sql);
 		ResultSet resultSet = connectDB.getResult();
 		ObservableList<Reader> data = FXCollections.observableArrayList();
@@ -256,6 +254,7 @@ public class IMP_UserPowerManagement extends LibraryBLL {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Table.getItems().clear();
 		Table.setItems(data);
 	}
 
@@ -288,6 +287,13 @@ public class IMP_UserPowerManagement extends LibraryBLL {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		// 将RadioButton置为原位
+		LendCardManager.setSelected(false);
+		LendManager.setSelected(false);
+		BookManager.setSelected(false);
+		SystemManager.setSelected(false);
+
 		if (EnumAdminRole.LendCardManager.Cmp(null, rolesNumber)) {
 			LendCardManager.setSelected(true);
 		}
@@ -346,6 +352,7 @@ public class IMP_UserPowerManagement extends LibraryBLL {
 		readerDAL.setReader(tempReader);
 		if (readerDAL.Update()) {
 			message.showMessage("消息", "更改成功");
+			RefreshTable();
 			message.showAndWait();
 			return;
 		}
@@ -423,6 +430,26 @@ public class IMP_UserPowerManagement extends LibraryBLL {
 		for (int i = 0; i < enumAdminRole.length; i++) {
 			choiceBox.getItems().add(enumAdminRole[i].getTypeName());
 		}
+	}
+
+	/**
+	 * 刷新管理员列表
+	 */
+	private void RefreshTable() {
+		connectDB.GetTable(tempSQL);
+		ResultSet resultSet = connectDB.getResult();
+		ObservableList<Reader> data = FXCollections.observableArrayList();
+		try {
+			while (resultSet.next()) {
+				Reader reader = new Reader();
+				reader.setValue(resultSet);
+				data.add(reader);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Table.setItems(data);
 	}
 
 }

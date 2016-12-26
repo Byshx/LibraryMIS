@@ -141,6 +141,12 @@ public class IMP_ReaderOp extends LibraryBLL {
 	// 获得返回单例
 	private ReturnStack back = ReturnStack.getReturnInstance();
 
+	/**
+	 * 用于临时保存用户输入的查找字段</br>
+	 * 
+	 */
+	private String[] wordpart = { "", "", "" };
+
 	// 内含静态方法，因此只创建一个实例
 	@SuppressWarnings("unused")
 	private FileChoose filechoose = null;
@@ -250,7 +256,19 @@ public class IMP_ReaderOp extends LibraryBLL {
 		Right_Button_ConfirmRegister.disableProperty().set(false);
 		Right_Button_ConfirmChange.disableProperty().set(true);
 		Right_Button_Cancel.disableProperty().set(false);
-		right_Text_CardID.clear();
+		connectDB.GetTable("SELECT MAX(rdID) FROM Library.dbo.TB_Reader");
+		ResultSet resultSet = connectDB.getResult();
+		String maxID = "";
+		try {
+			if (resultSet.next()) {
+				maxID = (Integer.parseInt(resultSet.getString(1)) + 1) + "";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		right_Text_CardID.setText(maxID);
+		right_Text_CardID.setEditable(false);
 		right_Text_Name.clear();
 		right_Text_Password.clear();
 		right_Text_Sex.getSelectionModel().clearSelection();
@@ -287,6 +305,7 @@ public class IMP_ReaderOp extends LibraryBLL {
 		readerDAL.setReader(getReaderData);
 		if (readerDAL.Update()) {
 			message.showMessage("消息", "挂失成功");
+			RefreshTable();
 			message.showAndWait();
 			return;
 		}
@@ -309,6 +328,7 @@ public class IMP_ReaderOp extends LibraryBLL {
 		readerDAL.setReader(getReaderData);
 		if (readerDAL.Update()) {
 			message.showMessage("消息", "已解除挂失");
+			RefreshTable();
 			message.showAndWait();
 			return;
 		}
@@ -335,6 +355,7 @@ public class IMP_ReaderOp extends LibraryBLL {
 		readerDAL.setReader(getReaderData);
 		if (readerDAL.Update()) {
 			message.showMessage("消息", "注销成功");
+			RefreshTable();
 			message.showAndWait();
 			return;
 		}
@@ -354,6 +375,7 @@ public class IMP_ReaderOp extends LibraryBLL {
 		if (result.get() == ButtonType.NO)
 			return;
 		UpdateNewInfo(0);
+		RefreshTable();
 		imageStream = null;
 	}
 
@@ -364,6 +386,7 @@ public class IMP_ReaderOp extends LibraryBLL {
 		if (result.get() == ButtonType.NO)
 			return;
 		UpdateNewInfo(2);
+		RefreshTable();
 		imageStream = null;
 	}
 
@@ -422,25 +445,27 @@ public class IMP_ReaderOp extends LibraryBLL {
 
 	@FXML
 	public void Top_Button_Search(MouseEvent event) {
-		String type = "";
-		String dept = "";
 		if (Top_Choice_Role.getSelectionModel().getSelectedItem() != null) {
 			connectDB.GetTable("SELECT rdType FROM Library.dbo.TB_ReaderType WHERE rdTypeName = '"
 					+ Top_Choice_Role.getSelectionModel().getSelectedItem() + "'");
 			ResultSet result = connectDB.getResult();
 			try {
 				if (result.next())
-					type = "r.rdType = '" + result.getString(1) + "' AND";
+					// 读者类型字段
+					wordpart[0] = "r.rdType = '" + result.getString(1) + "' AND";
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		if (Top_Choice_Department.getSelectionModel().getSelectedItem() != null) {
-			dept = " r.rdDept = '" + Top_Choice_Department.getSelectionModel().getSelectedItem() + "' AND";
+			wordpart[1] = " r.rdDept = '" + Top_Choice_Department.getSelectionModel().getSelectedItem() + "' AND";
 		}
-		String sql = "SELECT * FROM Library.dbo.TB_Reader AS r,Library.dbo.TB_ReaderType AS rt WHERE " + type + dept
-				+ " r.rdName LIKE '%" + Top_Choice_Name.getText() + "%' AND r.rdType = rt.rdType";
+		// 获取读者姓名字段
+		wordpart[2] = Top_Choice_Name.getText();
+
+		String sql = "SELECT * FROM Library.dbo.TB_Reader AS r,Library.dbo.TB_ReaderType AS rt WHERE " + wordpart[0]
+				+ wordpart[1] + " r.rdName LIKE '%" + Top_Choice_Name.getText() + "%' AND r.rdType = rt.rdType";
 		connectDB.GetTable(sql);
 		Table.getItems().clear();
 		ResultSet resultSet = connectDB.getResult();
@@ -645,6 +670,29 @@ public class IMP_ReaderOp extends LibraryBLL {
 				message.showMessage("消息", Message[ops + 1]);
 				message.showAndWait();
 			}
+		}
+	}
+
+	/**
+	 * 用于刷新读者列表
+	 */
+	private void RefreshTable() {
+		String sql = "SELECT * FROM Library.dbo.TB_Reader AS r,Library.dbo.TB_ReaderType AS rt WHERE " + wordpart[0]
+				+ wordpart[1] + " r.rdName LIKE '%" + wordpart[2] + "%' AND r.rdType = rt.rdType";
+		connectDB.GetTable(sql);
+		ResultSet resultSet = connectDB.getResult();
+		ObservableList<Reader> data = FXCollections.observableArrayList();
+		try {
+			while (resultSet.next()) {
+				Reader reader = new Reader();
+				reader.setValue(resultSet);
+				data.add(reader);
+			}
+			Table.getItems().clear();
+			Table.setItems(data);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

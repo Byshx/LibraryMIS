@@ -332,6 +332,22 @@ public class IMP_BookIO extends LibraryBLL {
 			message.showAndWait();
 			return;
 		}
+		connectDB.GetTable("SELECT COUNT(*) FROM Library.dbo.TB_Borrow WHERE IdOverDay IS NULL AND rdID = '"
+				+ reader.getRdID() + "'");
+		resultSet = connectDB.getResult();
+		try {
+			if (resultSet.next()) {
+				int OverNumber = Integer.parseInt(resultSet.getString(1));
+				if (OverNumber > 0) {
+					message.showMessage("消息", "含有超期未还书籍，不能借阅");
+					message.showAndWait();
+					return;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// 借书顺序号，数据库自动生成
 		borrow.setBorrowID(null);
 		borrow.setRdID(reader.getRdID());
@@ -464,13 +480,13 @@ public class IMP_BookIO extends LibraryBLL {
 			// 确认更新
 			boolean updateBookStatus = false;
 			// 将状态设为已还
-				borrow.setIsHasReturn(true);
+			borrow.setIsHasReturn(true);
 			if (backBook.isLost()) {
 				borrow.setIdPunishMoney(backBook.getPunish());
 				updateBookStatus = connectDB.UpdateTable(
 						"Update Library.dbo.TB_Book SET bkStatus = ? WHERE bkID = '" + borrow.getBkID() + "'", null,
 						null, new String[] { "遗失" });
-			} else {			
+			} else {
 				updateBookStatus = connectDB.UpdateTable(
 						"UPDATE Library.dbo.TB_Book SET bkStatus = ? WHERE bkID = '" + borrow.getBkID() + "'", null,
 						null, new String[] { "在馆" });
